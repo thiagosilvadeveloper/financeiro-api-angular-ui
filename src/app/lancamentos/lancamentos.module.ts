@@ -12,7 +12,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { TableModule } from 'primeng/table';
 import { MessageModule } from 'primeng/message';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
@@ -28,8 +27,6 @@ import { LancamentosService } from './lancamentos.service';
     CommonModule,
     FormsModule,
     HttpClientModule,
-
-    BrowserAnimationsModule,
     InputTextModule,
     ButtonModule,
     TableModule,

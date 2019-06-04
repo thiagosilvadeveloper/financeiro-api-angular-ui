@@ -1,5 +1,8 @@
+import { ErrorHandlerService } from './../../core/error-handler.service';
 import { LancamentosService, LancamentoFiltro } from './../lancamentos.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -13,10 +16,14 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   lancamentos = [];
 
+  @ViewChild('tabela') tabela;
+
   constructor(
-    private lancamentoService: LancamentosService
-  ) {
-  }
+    private errorHandlerService: ErrorHandlerService,
+    private lancamentoService: LancamentosService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) { }
 
   ngOnInit() {
     // this.pesquisar(); -- O método aoMudarPagina já é executado ao inicializar
@@ -29,11 +36,30 @@ export class LancamentosPesquisaComponent implements OnInit {
       .then(resposta => {
         this.lancamentos = resposta.lancamentos;
         this.totalElementos = resposta.totalElementos;
-      });
+      })
+      .catch(error => this.errorHandlerService.handle(error));
   }
 
   aoMudarPagina(event: any) {
     const pagina = event.first / event.rows;
     this.pesquisar(pagina);
+  }
+
+  confirmarExclusao(lancamento: any) {
+    this.confirmationService.confirm({
+      message: 'Deseja realmente excluir ?',
+      accept: () => this.excluir(lancamento)
+    });
+  }
+
+  private excluir(lancamento: any) {
+    this.lancamentoService.excluir(lancamento.codigo)
+      .then(() => {
+        this.tabela.first = 0;
+        this.pesquisar();
+
+        this.messageService.add({severity: 'success', summary: 'Confirmação', detail: 'Lançamento excluído com sucesso.'});
+      })
+      .catch(error => this.errorHandlerService.handle(error));
   }
 }

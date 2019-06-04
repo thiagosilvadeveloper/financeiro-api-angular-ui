@@ -26,7 +26,8 @@
 
   <div class="ui-g">
     <p-table [value]="lancamentos" [paginator]="true" [responsive]="true"
-      [rows]="filtro.itensPorPagina" [lazy]="true" [totalRecords]="totalElementos" (onLazyLoad)="aoMudarPagina($event)">
+      [rows]="filtro.itensPorPagina" [lazy]="true" [totalRecords]="totalElementos" (onLazyLoad)="aoMudarPagina($event)"
+      #tabela>
 
       <ng-template pTemplate="header">
         <tr>
@@ -48,7 +49,7 @@
           <td class="col-valor" [ngStyle]="{ color: lancamento.tipo === 'DESPESA' ? 'red' : 'blue' }">{{ lancamento.valor | number: '1.2-2' }}</td>
           <td class="col-acoes">
             <a pButton icon="pi pi-pencil" style="margin-right: 3px" pTooltip="Editar" tooltipPosition="top"></a>
-            <a pButton icon="pi pi-trash" pTooltip="Deletar" tooltipPosition="top"></a>
+            <a pButton icon="pi pi-trash" pTooltip="Deletar" tooltipPosition="top" (click)="confirmarExclusao(lancamento)"></a>
           </td>
         </tr>
       </ng-template>
