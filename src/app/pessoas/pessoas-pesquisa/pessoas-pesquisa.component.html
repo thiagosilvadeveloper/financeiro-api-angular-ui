@@ -1,0 +1,55 @@
+
+<div class="container">
+  <form autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Pessoas</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input type="text" pInputText name="nome" [(ngModel)]="filtro.nome">
+      </div>
+
+      <div class="ui-g-12">
+          <button pButton type="submit" label="Pesquisar" icon="pi pi-search" iconPos="left"></button>
+        </div>
+    </div>
+  </form>
+
+  <div class="ui-g">
+    <p-table [value]="pessoas" [paginator]="true" [responsive]="true"
+      [rows]="filtro.itensPorPagina" [lazy]="true" [totalRecords]="totalElementos" (onLazyLoad)="aoMudarPagina($event)">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nome</th>
+          <th>Cidade</th>
+          <th>Estado</th>
+          <th>Status</th>
+          <th class="col-acoes"></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-pessoa>
+        <tr>
+          <td>{{ pessoa.nome }}</td>
+          <td>{{ pessoa.endereco.cidade }}</td>
+          <td>{{ pessoa.endereco.estado }}</td>
+          <td>
+            <a href="#" pTooltip="Inativar" tooltipPosition="top" [hidden]="!pessoa.ativo">Ativo</a>
+            <a href="#" pTooltip="Ativar" tooltipPosition="top" [hidden]="pessoa.ativo">Inativo</a>
+          </td>
+          <td class="col-acoes">
+            <a pButton icon="pi pi-pencil" style="margin: 3px" pTooltip="Editar" tooltipPosition="top"></a>
+            <a pButton icon="pi pi-trash" pTooltip="Deletar" tooltipPosition="top"></a>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div class="ui-g-12">
+        <a pButton label="Novo Pessoa" icon="pi pi-plus"></a>
+      </div>
+  </div>
+</div>
