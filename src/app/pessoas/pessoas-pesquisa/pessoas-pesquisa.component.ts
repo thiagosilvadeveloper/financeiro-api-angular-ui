@@ -49,7 +49,7 @@ export class PessoasPesquisaComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Deseja realmente excluir ?',
       accept: () => this.excluir(pessoa)
-    })
+    });
   }
 
   excluir(pessoa: any) {
@@ -60,6 +60,12 @@ export class PessoasPesquisaComponent implements OnInit {
 
         this.messageService.add({severity: 'success', summary: 'Confirmação', detail: 'Pessoa excluída com sucesso.'});
       })
+      .catch(error => this.errorHandlerService.handle(error));
+  }
+
+  alterarStatus(pessoa: any) {
+    this.pessoaService.alterarStatus(pessoa.codigo, !pessoa.ativo)
+      .then(() => pessoa.ativo = !pessoa.ativo )
       .catch(error => this.errorHandlerService.handle(error));
   }
 }

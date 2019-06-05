@@ -1,3 +1,4 @@
+import { Lancamento } from './../core/models/lancamento.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -13,6 +14,15 @@ export class LancamentosService {
   constructor(
     private http: HttpClient
   ) { }
+
+  criar(lancamento: Lancamento): Promise<Lancamento> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', this._TOKEN);
+    headers = headers.append('Content-Type', 'application/json');
+
+    return this.http.post(`${this._URL}`, JSON.stringify(lancamento), { headers }).toPromise()
+      .then(response => (response as Lancamento));
+  }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     let headers = new HttpHeaders();

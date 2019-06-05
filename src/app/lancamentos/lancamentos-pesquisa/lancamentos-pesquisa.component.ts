@@ -19,10 +19,10 @@ export class LancamentosPesquisaComponent implements OnInit {
   @ViewChild('tabela') tabela;
 
   constructor(
+    private confirmationService: ConfirmationService,
     private errorHandlerService: ErrorHandlerService,
     private lancamentoService: LancamentosService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {

@@ -38,8 +38,8 @@
           <td>{{ pessoa.endereco.cidade }}</td>
           <td>{{ pessoa.endereco.estado }}</td>
           <td>
-            <a href="#" pTooltip="Inativar" tooltipPosition="top" [hidden]="!pessoa.ativo">Ativo</a>
-            <a href="#" pTooltip="Ativar" tooltipPosition="top" [hidden]="pessoa.ativo">Inativo</a>
+            <a href="#" pTooltip="Inativar" tooltipPosition="top" [hidden]="!pessoa.ativo" (click)="alterarStatus(pessoa)">Ativo</a>
+            <a href="#" pTooltip="Ativar" tooltipPosition="top" [hidden]="pessoa.ativo" (click)="alterarStatus(pessoa)">Inativo</a>
           </td>
           <td class="col-acoes">
             <a pButton icon="pi pi-pencil" style="margin: 3px" pTooltip="Editar" tooltipPosition="top"></a>
