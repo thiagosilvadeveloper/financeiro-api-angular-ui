@@ -37,6 +37,14 @@ export class PessoasService {
       });
 
   }
+
+  excluir(codigo: number): Promise<void> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', this._TOKEN);
+
+    return this.http.delete(`${this._URL}/${codigo}`, { headers }).toPromise()
+      .then(() => null);
+  }
 }
 
 export class PessoaFilter {
