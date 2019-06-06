@@ -1,9 +1,9 @@
-import { Lancamento } from './../core/models/lancamento.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import * as moment from 'moment';
+import { Lancamento } from './../core/models/lancamento.model';
 
+import * as moment from 'moment';
 
 @Injectable()
 export class LancamentosService {
@@ -65,6 +65,45 @@ export class LancamentosService {
 
     return this.http.delete(`${this._URL}/${codigo}`, { headers }).toPromise()
       .then(() => null);
+  }
+
+  atualizar(lancamento: Lancamento): Promise<Lancamento> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', this._TOKEN);
+    headers = headers.append('Content-Type', 'application/json');
+
+    return this.http.put(`${this._URL}/${lancamento.codigo}`, JSON.stringify(lancamento), { headers }).toPromise()
+      .then(response => {
+        const lancamento = (response as Lancamento);
+        this.converterStringParaDatas([lancamento]);
+
+        return lancamento;
+      });
+  }
+
+  buscaPeloCodigo(codigo: number): Promise<Lancamento> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', this._TOKEN);
+
+    return this.http.get(`${this._URL}/${codigo}`, { headers }).toPromise()
+      .then(response => {
+        const lancamento = (response as Lancamento);
+        this.converterStringParaDatas([lancamento]);
+
+        return lancamento;
+      });
+  }
+
+  converterStringParaDatas(lancamentos: Lancamento[]) {
+    lancamentos.map(lancamento => {
+      if (lancamento.dataVencimento) {
+        lancamento.dataVencimento = moment(lancamento.dataVencimento).toDate();
+      }
+
+      if (lancamento.dataPagamento) {
+        lancamento.dataPagamento = moment(lancamento.dataPagamento).toDate();
+      }
+    });
   }
 }
 

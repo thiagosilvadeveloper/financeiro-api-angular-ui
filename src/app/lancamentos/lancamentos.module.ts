@@ -17,6 +17,7 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LancamentosService } from './lancamentos.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -37,15 +38,13 @@ import { LancamentosService } from './lancamentos.service';
     DropdownModule,
     CurrencyMaskModule,
     MessageModule,
+    RouterModule,
 
     SharedModule
   ],
   providers: [
     LancamentosService
   ],
-  exports: [
-    LancamentoCadastroComponent,
-    LancamentosPesquisaComponent
-  ]
+  exports: []
 })
 export class LancamentosModule { }

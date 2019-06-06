@@ -37,9 +37,6 @@ import { PessoasService } from './pessoas.service';
   providers: [
     PessoasService
   ],
-  exports: [
-    PessoaCadastroComponent,
-    PessoasPesquisaComponent
-  ]
+  exports: []
 })
 export class PessoasModule { }

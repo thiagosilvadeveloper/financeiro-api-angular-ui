@@ -6,7 +6,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RouterModule } from '@angular/router';
 
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
 
@@ -17,14 +19,16 @@ registerLocaleData(pt);
 
 @NgModule({
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    PaginaNaoEncontradaComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ConfirmDialogModule,
     CommonModule,
-    ToastModule,
+    RouterModule,
+    ToastModule
   ],
   providers: [
     ErrorHandlerService,
@@ -33,9 +37,9 @@ registerLocaleData(pt);
     { provide: LOCALE_ID, useValue: 'pt-BR'} // provider por valor
   ],
   exports: [
+    ConfirmDialogModule,
     NavbarComponent,
-    ToastModule,
-    ConfirmDialogModule
+    ToastModule
   ]
 })
 export class CoreModule { }

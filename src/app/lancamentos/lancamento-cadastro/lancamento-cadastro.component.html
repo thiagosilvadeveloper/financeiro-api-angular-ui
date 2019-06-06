@@ -3,7 +3,7 @@
   <form autocomplete="off" #lancamentoForm="ngForm" (ngSubmit)="salvar(lancamentoForm)">
     <div class="ui-g">
       <div class="ui-g-12">
-        <h2>Novo Lançamento</h2>
+        <h2>{{ titulo }}</h2>
       </div>
 
       <div class="ui-g-12">
@@ -51,8 +51,8 @@
 
       <div class="ui-g-12">
         <button pButton type="submit" [disabled]="lancamentoForm.invalid" label="Salvar" icon="pi pi-check"></button>
-        <button pButton type="button" label="Novo" icon="pi pi-plus" class="ui-button-info" style="margin: 3px"></button>
-        <a href="#"> Voltar para a pesquisa</a>
+        <button pButton type="button" label="Novo" icon="pi pi-plus" class="ui-button-info" style="margin: 3px" (click)="novo(lancamentoForm)"></button>
+        <a routerLink="/lancamentos"> Voltar para a pesquisa</a>
       </div>
     </div>
   </form>
