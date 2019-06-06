@@ -42,7 +42,7 @@
             <a href="#" pTooltip="Ativar" tooltipPosition="top" [hidden]="pessoa.ativo" (click)="alterarStatus(pessoa)">Inativo</a>
           </td>
           <td class="col-acoes">
-            <a pButton icon="pi pi-pencil" style="margin: 3px" pTooltip="Editar" tooltipPosition="top"></a>
+            <a pButton icon="pi pi-pencil" style="margin: 3px" pTooltip="Editar" tooltipPosition="top" [routerLink]="['/pessoas', pessoa.codigo]"></a>
             <a pButton icon="pi pi-trash" pTooltip="Deletar" tooltipPosition="top" (click)="confirmarExclusao(pessoa)"></a>
           </td>
         </tr>
@@ -50,7 +50,7 @@
     </p-table>
 
     <div class="ui-g-12">
-        <a pButton label="Novo Pessoa" icon="pi pi-plus"></a>
+        <a pButton label="Novo Pessoa" icon="pi pi-plus" routerLink="/pessoas/novo"></a>
       </div>
   </div>
 </div>

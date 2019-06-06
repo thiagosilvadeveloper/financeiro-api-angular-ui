@@ -1,3 +1,4 @@
+import { PessoasRoutingModule } from './pessoas-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -32,7 +33,8 @@ import { PessoasService } from './pessoas.service';
     TableModule,
     TooltipModule,
 
-    SharedModule
+    SharedModule,
+    PessoasRoutingModule
   ],
   providers: [
     PessoasService

@@ -15,6 +15,7 @@ import { MessageModule } from 'primeng/message';
 
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LancamentosService } from './lancamentos.service';
 import { RouterModule } from '@angular/router';
@@ -38,9 +39,9 @@ import { RouterModule } from '@angular/router';
     DropdownModule,
     CurrencyMaskModule,
     MessageModule,
-    RouterModule,
 
-    SharedModule
+    SharedModule,
+    LancamentosRoutingModule
   ],
   providers: [
     LancamentosService

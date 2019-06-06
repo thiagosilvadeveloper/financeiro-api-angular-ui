@@ -81,6 +81,23 @@ export class PessoasService {
     return this.http.put(`${this._URL}/${codigo}/ativo`, ativo, { headers }).toPromise()
       .then(() => null);
   }
+
+  buscaPeloCodigo(codigo: number): Promise<Pessoa> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', this._TOKEN);
+
+    return this.http.get(`${this._URL}/${codigo}`, { headers }).toPromise()
+      .then(response => (response as Pessoa));
+  }
+
+  atualizar(pessoa: Pessoa): Promise<Pessoa> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', this._TOKEN);
+    headers = headers.append('Content-Type', 'application/json');
+
+    return this.http.put(`${this._URL}/${pessoa.codigo}`, JSON.stringify(pessoa), { headers }).toPromise()
+      .then(response => (response as Pessoa));
+  }
 }
 
 export class PessoaFilter {
