@@ -1,7 +1,7 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
@@ -34,6 +34,7 @@ registerLocaleData(pt);
     ErrorHandlerService,
     ConfirmationService,
     MessageService,
+    Title,
     { provide: LOCALE_ID, useValue: 'pt-BR'} // provider por valor
   ],
   exports: [

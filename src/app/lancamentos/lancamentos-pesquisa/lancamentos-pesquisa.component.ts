@@ -1,6 +1,7 @@
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { LancamentosService, LancamentoFiltro } from './../lancamentos.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { MessageService, ConfirmationService } from 'primeng/api';
 
@@ -22,11 +23,14 @@ export class LancamentosPesquisaComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private errorHandlerService: ErrorHandlerService,
     private lancamentoService: LancamentosService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private title: Title
   ) { }
 
   ngOnInit() {
     // this.pesquisar(); -- O método aoMudarPagina já é executado ao inicializar
+
+    this.title.setTitle('Lançamentos');
   }
 
   pesquisar(pagina = 0) {
