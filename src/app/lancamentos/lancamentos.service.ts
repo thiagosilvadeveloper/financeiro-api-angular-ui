@@ -9,25 +9,17 @@ import * as moment from 'moment';
 export class LancamentosService {
 
   _URL = 'http://localhost:8080/lancamentos';
-  _TOKEN = 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==';
 
   constructor(
     private http: HttpClient
   ) { }
 
   criar(lancamento: Lancamento): Promise<Lancamento> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', this._TOKEN);
-    headers = headers.append('Content-Type', 'application/json');
-
-    return this.http.post(`${this._URL}`, JSON.stringify(lancamento), { headers }).toPromise()
+    return this.http.post(`${this._URL}`, JSON.stringify(lancamento)).toPromise()
       .then(response => (response as Lancamento));
   }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', this._TOKEN);
-
     let params = new HttpParams();
 
     params = params.append('page', filtro.pagina.toString());
@@ -45,7 +37,7 @@ export class LancamentosService {
       params = params.append('dataVencimentoAte', moment(filtro.dataVencimentoAte).format('YYYY-MM-DD'));
     }
 
-    return this.http.get(`${this._URL}?resumo`, { headers, params } )
+    return this.http.get(`${this._URL}?resumo`, { params } )
       .toPromise()
       .then(response => {
         const responseJson = (response as JSON);
@@ -60,19 +52,12 @@ export class LancamentosService {
   }
 
   excluir(codigo: number): Promise<void> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', this._TOKEN);
-
-    return this.http.delete(`${this._URL}/${codigo}`, { headers }).toPromise()
+    return this.http.delete(`${this._URL}/${codigo}`).toPromise()
       .then(() => null);
   }
 
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', this._TOKEN);
-    headers = headers.append('Content-Type', 'application/json');
-
-    return this.http.put(`${this._URL}/${lancamento.codigo}`, JSON.stringify(lancamento), { headers }).toPromise()
+    return this.http.put(`${this._URL}/${lancamento.codigo}`, JSON.stringify(lancamento)).toPromise()
       .then(response => {
         const lancamento = (response as Lancamento);
         this.converterStringParaDatas([lancamento]);
@@ -82,10 +67,7 @@ export class LancamentosService {
   }
 
   buscaPeloCodigo(codigo: number): Promise<Lancamento> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', this._TOKEN);
-
-    return this.http.get(`${this._URL}/${codigo}`, { headers }).toPromise()
+    return this.http.get(`${this._URL}/${codigo}`).toPromise()
       .then(response => {
         const lancamento = (response as Lancamento);
         this.converterStringParaDatas([lancamento]);

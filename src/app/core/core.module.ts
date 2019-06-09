@@ -10,10 +10,13 @@ import { RouterModule } from '@angular/router';
 
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { NavbarComponent } from './navbar/navbar.component';
+
+import { AutenticacaoService } from '../seguranca/autenticacao.service';
 import { ErrorHandlerService } from './error-handler.service';
 
 import pt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { SegurancaModule } from '../seguranca/seguranca.module';
 
 registerLocaleData(pt);
 
@@ -28,9 +31,11 @@ registerLocaleData(pt);
     ConfirmDialogModule,
     CommonModule,
     RouterModule,
-    ToastModule
+    ToastModule,
+    SegurancaModule
   ],
   providers: [
+    AutenticacaoService,
     ErrorHandlerService,
     ConfirmationService,
     MessageService,
@@ -40,7 +45,8 @@ registerLocaleData(pt);
   exports: [
     ConfirmDialogModule,
     NavbarComponent,
-    ToastModule
+    ToastModule,
+    SegurancaModule
   ]
 })
 export class CoreModule { }

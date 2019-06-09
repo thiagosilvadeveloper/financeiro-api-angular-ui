@@ -13,8 +13,15 @@ export class ErrorHandlerService {
 
     if (typeof response === 'string') {
       message = response;
-    } else if (response.error[0]['mensagemUsuario']) {
-      message = response.error[0]['mensagemUsuario'];
+    } else if (response instanceof Response
+      && response.status >= 400 && response.status <= 499) {
+      let errors;
+      message = 'Ocorreu um erro ao processar a sua solicitação';
+      try {
+        errors = response.json();
+        message = errors[0].mensagemUsuario;
+      } catch (e) { }
+
     } else {
       message = 'Errro ao consumir recurso API. Tente novamente.';
       console.error('Ocorreu um erro', response);

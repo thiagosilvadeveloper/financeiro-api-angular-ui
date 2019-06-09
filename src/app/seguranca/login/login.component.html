@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1>Login</h1>
+    </div>
+
+    {{ autenticacaoService.jwtPayload | json }}
+
+    <form autocomplete="off" #loginForm="ngForm" (ngSubmit)="acessar(loginForm)">
+
+      <div class="ui-g-12">
+        <input type="text" pInputText placeholder="E-mail" name="usuario" [(ngModel)]="usuario">
+      </div>
+
+      <div class="ui-g-12">
+        <input type="password" pInputText placeholder="Senha" name="senha" [(ngModel)]="senha">
+      </div>
+
+      <div class="ui-g-12">
+        <button type="submit" pButton label="Acessar"></button>
+      </div>
+
+    </form>
+  </div>
+</div>
