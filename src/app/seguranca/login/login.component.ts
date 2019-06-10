@@ -20,7 +20,9 @@ export class LoginComponent implements OnInit {
     private autenticacaoService: AutenticacaoService,
     private errorHandler: ErrorHandlerService,
     private router: Router
-  ) { }
+  ) {
+    this.autenticacaoService.removerToken();
+  }
 
   ngOnInit() {
   }

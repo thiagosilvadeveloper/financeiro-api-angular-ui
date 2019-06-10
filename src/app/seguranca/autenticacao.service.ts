@@ -48,14 +48,25 @@ export class AutenticacaoService {
 
     return this.http.post(this._URL, body, { headers, withCredentials: true }).toPromise()
       .then(response => {
+        console.log('Response:', response);
         this.armazenarToken((response as JSON)['access_token']);
         Promise.resolve(null);
       })
-      .catch(response => Promise.reject(response));
+      .catch(response => {
+        console.log('Response:', response);
+        Promise.reject(response);
+      });
   }
 
-  getToken() {
-    return localStorage.getItem('token');
+  removerToken() {
+    this.jwtPayload = null;
+    return localStorage.removeItem('access_token');
+  }
+
+  isAccessTokenInvalido() {
+    const token = localStorage.getItem('access_token');
+
+    return !token || this.jwtHelperService.isTokenExpired(token);
   }
 
   private armazenarToken(token: string) {
