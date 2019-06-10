@@ -39,6 +39,21 @@ export class AutenticacaoService {
       });
   }
 
+  refreshToken(): Promise<void> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    const body = 'grant_type=refresh_token';
+
+    return this.http.post(this._URL, body, { headers, withCredentials: true }).toPromise()
+      .then(response => {
+        this.armazenarToken((response as JSON)['access_token']);
+        Promise.resolve(null);
+      })
+      .catch(response => Promise.reject(response));
+  }
+
   getToken() {
     return localStorage.getItem('token');
   }

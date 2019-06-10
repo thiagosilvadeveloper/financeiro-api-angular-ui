@@ -3,14 +3,15 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <a href="javascript:;" class="navbar-toggle" (click)="exibindoMenu = !exibindoMenu"><i class="pi pi-bars"></i></a>
+        <button (click)="authService.refreshToken()">Refresh token</button>
       </div>
     </div>
   </div>
 </div>
 
 <ul class="navbar-menu" [hidden]="!exibindoMenu">
-  <li class="navbar-usuario">Thiago Silva</li>
-  <li class="navbar-menu-item" routerLinkActive="ativo"><a routerLink="/lancamentos">Lançamentos</a></li>
-  <li class="navbar-menu-item" routerLinkActive="ativo"><a routerLink="/pessoas">Pessoas</a></li>
+  <li class="navbar-usuario">{{ nome }}</li>
+  <li class="navbar-menu-item" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/lancamentos">Lançamentos</a></li>
+  <li class="navbar-menu-item" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_PESQUISAR_PESSOA')"><a routerLink="/pessoas">Pessoas</a></li>
   <li class="navbar-menu-item"><a href="#">Logout</a></li>
 </ul>

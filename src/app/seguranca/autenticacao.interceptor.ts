@@ -6,12 +6,17 @@ import { Observable } from 'rxjs';
 export class AutenticacaoInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    let authRequest: any;
-    authRequest = req.clone({
-        setHeaders: {
-          'Content-Type': 'application/json'
-        }
-    });
-    return next.handle(authRequest);
+
+    if (req.method !== 'GET' && !req.url.includes('/oauth/token')) {
+      let authRequest: any;
+      authRequest = req.clone({
+          setHeaders: {
+            'Content-Type': 'application/json'
+          }
+      });
+      return next.handle(authRequest);
+    }
+
+    return next.handle(req);
   }
 }
