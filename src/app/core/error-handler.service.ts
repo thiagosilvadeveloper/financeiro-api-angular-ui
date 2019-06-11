@@ -23,7 +23,7 @@ export class ErrorHandlerService {
       } catch (e) { }
 
     } else {
-      message = 'Errro ao consumir recurso API. Tente novamente.';
+      message = 'Erro ao consumir recurso API. Tente novamente.';
       console.error('Ocorreu um erro', response);
     }
 

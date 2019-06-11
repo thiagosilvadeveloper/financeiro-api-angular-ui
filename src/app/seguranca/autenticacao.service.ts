@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
+import 'rxjs/add/observable/fromPromise';
 
 @Injectable()
 export class AutenticacaoService {
@@ -48,14 +50,12 @@ export class AutenticacaoService {
 
     return this.http.post(this._URL, body, { headers, withCredentials: true }).toPromise()
       .then(response => {
-        console.log('Response:', response);
+        console.log('Refresh token');
+
         this.armazenarToken((response as JSON)['access_token']);
-        Promise.resolve(null);
+        return Promise.resolve(null);
       })
-      .catch(response => {
-        console.log('Response:', response);
-        Promise.reject(response);
-      });
+      .catch(error => Promise.reject(error));
   }
 
   removerToken() {
