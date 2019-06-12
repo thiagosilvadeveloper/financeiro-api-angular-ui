@@ -1,19 +1,20 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
 import 'rxjs/add/observable/fromPromise';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AutenticacaoService {
 
-  _URL = 'http://localhost:8080/oauth/token';
+  private autenticacaoUrl: string;
   jwtPayload: any;
 
   constructor(
     private http: HttpClient,
     private jwtHelperService: JwtHelperService
   ) {
+    this.autenticacaoUrl = `${environment.urlApi}/oauth/token`;
     this.carregarToken();
   }
 
@@ -24,7 +25,7 @@ export class AutenticacaoService {
 
     const body = `client=angular&username=${usuario}&password=${senha}&grant_type=password`;
 
-    return this.http.post(this._URL, body, { headers }).toPromise()
+    return this.http.post(this.autenticacaoUrl, body, { headers }).toPromise()
       .then(response => {
         this.armazenarToken((response as JSON)['access_token']);
       })
@@ -48,25 +49,40 @@ export class AutenticacaoService {
 
     const body = 'grant_type=refresh_token';
 
-    return this.http.post(this._URL, body, { headers, withCredentials: true }).toPromise()
+    return this.http.post(this.autenticacaoUrl, body, { headers, withCredentials: true }).toPromise()
       .then(response => {
-        console.log('Refresh token');
-
         this.armazenarToken((response as JSON)['access_token']);
         return Promise.resolve(null);
-      })
-      .catch(error => Promise.reject(error));
+      });
   }
 
   removerToken() {
     this.jwtPayload = null;
-    return localStorage.removeItem('access_token');
+    localStorage.removeItem('access_token');
   }
 
   isAccessTokenInvalido() {
     const token = localStorage.getItem('access_token');
 
     return !token || this.jwtHelperService.isTokenExpired(token);
+  }
+
+  getToken() {
+    return localStorage.getItem('access_token');
+  }
+
+  temPermissao(role: string): boolean {
+    return this.jwtPayload && this.jwtPayload.authorities.includes(role);
+  }
+
+  temQualquerPermissao(roles) {
+    for (const role of roles) {
+      if (!this.temPermissao(role)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   private armazenarToken(token: string) {

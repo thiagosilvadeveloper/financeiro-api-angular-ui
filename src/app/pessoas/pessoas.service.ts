@@ -1,23 +1,27 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pessoa } from '../core/models/pessoa.model';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable()
 export class PessoasService {
 
-  _URL = 'http://localhost:8080/pessoas';
+  private pessoasUrl: string;
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    this.pessoasUrl = `${environment.urlApi}/pessoas`;
+  }
 
   criar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.post(this._URL, JSON.stringify(pessoa)).toPromise()
+    return this.http.post(this.pessoasUrl, JSON.stringify(pessoa)).toPromise()
       .then(response => (response as Pessoa));
   }
 
   listarTodas(): Promise<any> {
-    return this.http.get(this._URL).toPromise()
+    return this.http.get(this.pessoasUrl).toPromise()
       .then(response => {
         const responseJson = (response as JSON);
 
@@ -40,7 +44,7 @@ export class PessoasService {
       params = params.append('nome', filtro.nome);
     }
 
-    return this.http.get(this._URL, { params }).toPromise()
+    return this.http.get(this.pessoasUrl, { params }).toPromise()
       .then(response => {
         const responseJson = (response as JSON);
 
@@ -55,22 +59,22 @@ export class PessoasService {
   }
 
   excluir(codigo: number): Promise<void> {
-    return this.http.delete(`${this._URL}/${codigo}`).toPromise()
+    return this.http.delete(`${this.pessoasUrl}/${codigo}`).toPromise()
       .then(() => null);
   }
 
   alterarStatus(codigo: number, ativo: boolean): Promise<void> {
-    return this.http.put(`${this._URL}/${codigo}/ativo`, ativo).toPromise()
+    return this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, ativo).toPromise()
       .then(() => null);
   }
 
   buscaPeloCodigo(codigo: number): Promise<Pessoa> {
-    return this.http.get(`${this._URL}/${codigo}`).toPromise()
+    return this.http.get(`${this.pessoasUrl}/${codigo}`).toPromise()
       .then(response => (response as Pessoa));
   }
 
   atualizar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.put(`${this._URL}/${pessoa.codigo}`, JSON.stringify(pessoa)).toPromise()
+    return this.http.put(`${this.pessoasUrl}/${pessoa.codigo}`, JSON.stringify(pessoa)).toPromise()
       .then(response => (response as Pessoa));
   }
 }

@@ -4,18 +4,23 @@ import { Injectable } from '@angular/core';
 import { Lancamento } from './../core/models/lancamento.model';
 
 import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class LancamentosService {
 
-  _URL = 'http://localhost:8080/lancamentos';
+  private lancamentosUrl: string;
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    console.log(environment.urlApi);
+
+    this.lancamentosUrl = `${environment.urlApi}/lancamentos`;
+  }
 
   criar(lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.post(`${this._URL}`, JSON.stringify(lancamento)).toPromise()
+    return this.http.post(`${this.lancamentosUrl}`, JSON.stringify(lancamento)).toPromise()
       .then(response => (response as Lancamento));
   }
 
@@ -37,14 +42,14 @@ export class LancamentosService {
       params = params.append('dataVencimentoAte', moment(filtro.dataVencimentoAte).format('YYYY-MM-DD'));
     }
 
-    return this.http.get(`${this._URL}?resumo`, { params } )
+    return this.http.get(`${this.lancamentosUrl}?resumo`, { params } )
       .toPromise()
       .then(response => {
         const responseJson = (response as JSON);
 
         const resposta = {
-          lancamentos: responseJson['content'],
-          totalElementos: responseJson['totalElements']
+          lancamentos: responseJson ? responseJson['content'] : null,
+          totalElementos: responseJson ? responseJson['totalElements'] : 0
         }
 
         return resposta;
@@ -52,12 +57,12 @@ export class LancamentosService {
   }
 
   excluir(codigo: number): Promise<void> {
-    return this.http.delete(`${this._URL}/${codigo}`).toPromise()
+    return this.http.delete(`${this.lancamentosUrl}/${codigo}`).toPromise()
       .then(() => null);
   }
 
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.put(`${this._URL}/${lancamento.codigo}`, JSON.stringify(lancamento)).toPromise()
+    return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, JSON.stringify(lancamento)).toPromise()
       .then(response => {
         const lancamento = (response as Lancamento);
         this.converterStringParaDatas([lancamento]);
@@ -67,7 +72,7 @@ export class LancamentosService {
   }
 
   buscaPeloCodigo(codigo: number): Promise<Lancamento> {
-    return this.http.get(`${this._URL}/${codigo}`).toPromise()
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`).toPromise()
       .then(response => {
         const lancamento = (response as Lancamento);
         this.converterStringParaDatas([lancamento]);

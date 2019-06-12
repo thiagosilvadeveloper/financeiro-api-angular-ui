@@ -1,3 +1,4 @@
+import { AutenticacaoService } from './../../seguranca/autenticacao.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { LancamentosService, LancamentoFiltro } from './../lancamentos.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -20,6 +21,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   @ViewChild('tabela') tabela;
 
   constructor(
+    public auth: AutenticacaoService,
     private confirmationService: ConfirmationService,
     private errorHandlerService: ErrorHandlerService,
     private lancamentoService: LancamentosService,

@@ -4,8 +4,6 @@
       <h1>Login</h1>
     </div>
 
-    {{ autenticacaoService.jwtPayload | json }}
-
     <form autocomplete="off" #loginForm="ngForm" (ngSubmit)="acessar(loginForm)">
 
       <div class="ui-g-12">

@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
@@ -20,9 +19,7 @@ export class LoginComponent implements OnInit {
     private autenticacaoService: AutenticacaoService,
     private errorHandler: ErrorHandlerService,
     private router: Router
-  ) {
-    this.autenticacaoService.removerToken();
-  }
+  ) { }
 
   ngOnInit() {
   }

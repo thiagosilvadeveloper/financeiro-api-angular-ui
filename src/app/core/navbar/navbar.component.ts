@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ErrorHandlerService } from './../error-handler.service';
+import { LogoutService } from './../../seguranca/logout.service';
+import { Component } from '@angular/core';
 import { AutenticacaoService } from 'src/app/seguranca/autenticacao.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,14 +12,22 @@ import { AutenticacaoService } from 'src/app/seguranca/autenticacao.service';
 export class NavbarComponent {
 
   constructor(
-    private authService: AutenticacaoService
+    public auth: AutenticacaoService,
+    private errorService: ErrorHandlerService,
+    private logoutService: LogoutService,
+    private router: Router
   ) {}
 
-  temPermissao(role: string): boolean {
-    return this.authService.jwtPayload && this.authService.jwtPayload.authorities.includes(role);
+  logout() {
+    this.logoutService.logout()
+      .then(() => {
+        this.auth.removerToken();
+        this.router.navigate(['/login']);
+      })
+      .catch(error => this.errorService.handle(error));
   }
 
   get nome(): string {
-    return this.authService.jwtPayload ? this.authService.jwtPayload.nome : '';
+    return this.auth.jwtPayload ? this.auth.jwtPayload.nome : '';
   }
 }
