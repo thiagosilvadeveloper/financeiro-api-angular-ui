@@ -1,5 +1,5 @@
 import { SharedModule } from './../shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
@@ -39,6 +39,7 @@ import { RouterModule } from '@angular/router';
     DropdownModule,
     CurrencyMaskModule,
     MessageModule,
+    ReactiveFormsModule,
 
     SharedModule,
     LancamentosRoutingModule

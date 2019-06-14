@@ -1,14 +1,13 @@
 import { MessageService } from 'primeng/api';
-import { LancamentosService } from './../lancamentos.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { Lancamento } from 'src/app/core/models/lancamento.model';
-
 import { CategoriasService } from 'src/app/categorias/categorias.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
+import { LancamentosService } from './../lancamentos.service';
 import { PessoasService } from './../../pessoas/pessoas.service';
+
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -26,11 +25,12 @@ export class LancamentoCadastroComponent implements OnInit {
   categorias = [];
   pessoas = [];
 
-  lancamento = new Lancamento();
+  formulario: FormGroup;
 
   constructor(
     private categoriasService: CategoriasService,
     private errorHandlerService: ErrorHandlerService,
+    private formBuilder: FormBuilder,
     private lancamentoService: LancamentosService,
     private messageService: MessageService,
     private pessoaService: PessoasService,
@@ -40,6 +40,8 @@ export class LancamentoCadastroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.configurarFormulario();
+
     const codigo = this.route.snapshot.params['codigo'];
     if (codigo) {
       this.carregarLancamento(codigo);
@@ -49,6 +51,36 @@ export class LancamentoCadastroComponent implements OnInit {
 
     this.carregarCategorias();
     this.carregarPessoas();
+  }
+
+  configurarFormulario() {
+    this.formulario = this.formBuilder.group({
+      codigo: [],
+      tipo: [ 'RECEITA', Validators.required ],
+      dataVencimento: [ null, Validators.required ],
+      dataPagamento: [],
+      descricao: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(5) ]],
+      valor: [ null, Validators.required ],
+      pessoa: this.formBuilder.group({
+        codigo: [ null, Validators.required ],
+        nome: []
+      }),
+      categoria: this.formBuilder.group({
+        codigo: [ null, Validators.required ],
+        nome: []
+      }),
+      observacao: []
+    });
+  }
+
+  validarObrigatoriedade(input: FormControl) {
+    return (input.value ? null : { obrigatoriedade: true });
+  }
+
+  validarTamanhoMinimo(valor: number) {
+    return (input: FormControl) => {
+      return (!input.value || input.value.length >= valor) ? null : { tamanhoMinimo: { tamanho: valor } };
+    };
   }
 
   salvar(form: FormControl) {
@@ -62,10 +94,6 @@ export class LancamentoCadastroComponent implements OnInit {
   novo(form: FormControl) {
     form.reset();
 
-    setTimeout(() => {
-      this.lancamento = new Lancamento();
-    }, 1);
-
     this.router.navigate(['/lancamentos/novo']);
   }
 
@@ -78,15 +106,13 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   private atualizar() {
-    this.lancamentoService.atualizar(this.lancamento)
+    this.lancamentoService.atualizar(this.formulario.value)
       .then(() => this.router.navigate(['/lancamentos']) );
   }
 
   private criar(form: FormControl) {
-    this.lancamentoService.criar(this.lancamento)
+    this.lancamentoService.criar(this.formulario.value)
       .then(lancamento => {
-        form.reset();
-        this.lancamento = new Lancamento();
         this.messageService.add({severity: 'success', summary: 'Confirmação', detail: 'Lançamento criado com sucesso.'});
 
         this.router.navigate(['/lancamentos']);
@@ -95,13 +121,13 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   private isEditando(): boolean {
-    return Boolean(this.lancamento.codigo);
+    return Boolean(this.formulario.get('codigo').value);
   }
 
   private carregarLancamento(codigo: number) {
     this.lancamentoService.buscaPeloCodigo(codigo)
       .then(lancamento => {
-        this.lancamento = lancamento;
+        this.formulario.patchValue(lancamento);
         this.atualizarTitulo();
       })
       .catch(error => this.errorHandlerService.handle(error));
