@@ -23,9 +23,9 @@ import { SegurancaModule } from './seguranca/seguranca.module';
     FormsModule,
     LancamentosModule,
     PessoasModule,
+    RelatoriosModule,
     SegurancaModule,
-    AppRoutingModule,
-    RelatoriosModule
+    AppRoutingModule
   ],
   bootstrap: [AppComponent]
 })

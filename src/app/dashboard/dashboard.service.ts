@@ -7,21 +7,21 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class DashboardService {
 
-  private uriLancamentos = `${environment.urlApi}/lancamentos`;
+  private estatisticasUri = `${environment.urlApi}/lancamentos/estatisticas`;
 
   constructor(
     private http: HttpClient
   ) { }
 
   lancamentosPorCategoria(): Promise<any> {
-    const uri = `${this.uriLancamentos}/estatisticas/categoria`;
+    const uri = `${this.estatisticasUri}/estatisticas/categoria`;
 
     return this.http.get(uri).toPromise()
       .then(response => (response as JSON));
   }
 
   lancamentosPorDia(): Promise<any> {
-    const uri = `${this.uriLancamentos}/estatisticas/dia`;
+    const uri = `${this.estatisticasUri}/estatisticas/dia`;
 
     return this.http.get(uri).toPromise()
       .then(response => {
