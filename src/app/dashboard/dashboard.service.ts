@@ -14,14 +14,14 @@ export class DashboardService {
   ) { }
 
   lancamentosPorCategoria(): Promise<any> {
-    const uri = `${this.estatisticasUri}/estatisticas/categoria`;
+    const uri = `${this.estatisticasUri}/categoria`;
 
     return this.http.get(uri).toPromise()
       .then(response => (response as JSON));
   }
 
   lancamentosPorDia(): Promise<any> {
-    const uri = `${this.estatisticasUri}/estatisticas/dia`;
+    const uri = `${this.estatisticasUri}/dia`;
 
     return this.http.get(uri).toPromise()
       .then(response => {
