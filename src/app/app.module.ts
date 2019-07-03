@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 import { AppComponent } from './app.component';
 import { SegurancaModule } from './seguranca/seguranca.module';
@@ -17,6 +18,7 @@ import { SegurancaModule } from './seguranca/seguranca.module';
   imports: [
     CommonModule,
     CoreModule,
+    DashboardModule,
     FormsModule,
     LancamentosModule,
     PessoasModule,

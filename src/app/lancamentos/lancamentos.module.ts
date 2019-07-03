@@ -1,4 +1,3 @@
-import { SharedModule } from './../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,7 +17,7 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LancamentosService } from './lancamentos.service';
-import { RouterModule } from '@angular/router';
+import { SharedModule } from './../shared/shared.module';
 
 @NgModule({
   declarations: [

@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   acessar(form: FormControl) {
     this.autenticacaoService.login(this.usuario, this.senha)
-      .then(() => this.router.navigate(['/lancamentos']))
+      .then(() => this.router.navigate(['/dashboard']))
       .catch(error => this.errorHandler.handle(error));
   }
 }
