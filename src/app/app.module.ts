@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { RelatoriosModule } from './relatorios/relatorios.module';
 
 import { AppComponent } from './app.component';
 import { SegurancaModule } from './seguranca/seguranca.module';
@@ -23,8 +24,8 @@ import { SegurancaModule } from './seguranca/seguranca.module';
     LancamentosModule,
     PessoasModule,
     SegurancaModule,
-    AppRoutingModule
-
+    AppRoutingModule,
+    RelatoriosModule
   ],
   bootstrap: [AppComponent]
 })
