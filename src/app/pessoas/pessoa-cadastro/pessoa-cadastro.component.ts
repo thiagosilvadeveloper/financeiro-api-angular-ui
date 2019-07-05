@@ -1,3 +1,4 @@
+import { Contato } from './../../core/models/pessoa.model';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';

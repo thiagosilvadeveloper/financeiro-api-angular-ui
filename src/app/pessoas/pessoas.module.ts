@@ -1,4 +1,3 @@
-import { PessoasRoutingModule } from './pessoas-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,23 +11,31 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
+import { DialogModule } from 'primeng/dialog'
+
 import { SharedModule } from '../shared/shared.module';
 import { PessoasService } from './pessoas.service';
+import { PessoasRoutingModule } from './pessoas-routing.module';
+import { PessoaCadastroContatosComponent } from './pessoa-cadastro-contatos/pessoa-cadastro-contatos.component';
 
 @NgModule({
   declarations: [
     PessoaCadastroComponent,
-    PessoasPesquisaComponent
+    PessoasPesquisaComponent,
+    PessoaCadastroContatosComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
 
     ButtonModule,
+    DialogModule,
     InputMaskModule,
     InputTextModule,
     InputTextareaModule,
     MessageModule,
+    PanelModule,
     SelectButtonModule,
     TableModule,
     TooltipModule,
