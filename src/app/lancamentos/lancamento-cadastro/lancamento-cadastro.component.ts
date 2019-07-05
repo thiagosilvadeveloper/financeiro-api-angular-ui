@@ -27,6 +27,8 @@ export class LancamentoCadastroComponent implements OnInit {
 
   formulario: FormGroup;
 
+  efetuandoUpload = false;
+
   constructor(
     private categoriasService: CategoriasService,
     private errorHandlerService: ErrorHandlerService,
@@ -69,7 +71,9 @@ export class LancamentoCadastroComponent implements OnInit {
         codigo: [ null, Validators.required ],
         nome: []
       }),
-      observacao: []
+      observacao: [],
+      anexo: [],
+      urlAnexo: []
     });
   }
 
@@ -95,6 +99,41 @@ export class LancamentoCadastroComponent implements OnInit {
     form.reset();
 
     this.router.navigate(['/lancamentos/novo']);
+  }
+
+  beforeUpload() {
+    this.efetuandoUpload = true;
+  }
+
+  afterUpload(event) {
+    const resposta = event.originalEvent.body;
+    this.formulario.patchValue({
+      anexo: resposta.nome,
+      urlAnexo: resposta.url
+    });
+
+    this.efetuandoUpload = false;
+  }
+
+  uploadErrorHandler(event) {
+    this.errorHandlerService.handle('Ocorreu um erro ao tentar efetuar o upload do arquivo');
+    this.efetuandoUpload = false;
+  }
+
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
+  }
+
+  get nomeAnexo() {
+    const nomeAnexo = this.formulario.get('anexo').value;
+    return nomeAnexo.substring(nomeAnexo.indexOf('_') + 1, nomeAnexo.length);
+  }
+
+  get urlUploadAnexo() {
+    return this.lancamentoService.lancamentosAnexoUrl;
   }
 
   get titulo(): string {

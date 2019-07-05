@@ -92,6 +92,10 @@ export class LancamentosService {
       }
     });
   }
+
+  get lancamentosAnexoUrl() {
+    return `${this.lancamentosUrl}/anexo`;
+  }
 }
 
 export class LancamentoFiltro {

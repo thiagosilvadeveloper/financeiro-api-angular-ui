@@ -17,7 +17,10 @@ export class AutenticacaoInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
 
-    if (req.headers.get('Content-Type') === 'application/x-www-form-urlencoded') {
+    if (req.url.indexOf('/anexo') > -1) {
+      return next.handle(req);
+
+    } else if (req.headers.get('Content-Type') === 'application/x-www-form-urlencoded') {
       let authRequest: any;
       authRequest = req.clone({
           withCredentials: true

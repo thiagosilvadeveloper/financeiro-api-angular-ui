@@ -11,6 +11,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { TableModule } from 'primeng/table';
 import { MessageModule } from 'primeng/message';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
@@ -39,6 +41,8 @@ import { SharedModule } from './../shared/shared.module';
     CurrencyMaskModule,
     MessageModule,
     ReactiveFormsModule,
+    FileUploadModule,
+    ProgressSpinnerModule,
 
     SharedModule,
     LancamentosRoutingModule
