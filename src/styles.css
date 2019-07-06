@@ -11,6 +11,10 @@ a {
   text-decoration: none;
 }
 
+a.ui-button {
+  margin-right: .25em;
+}
+
 label {
   font-weight: bold;
 }

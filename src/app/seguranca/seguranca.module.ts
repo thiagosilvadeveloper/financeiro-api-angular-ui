@@ -1,4 +1,3 @@
-import { AutenticacaoInterceptor } from './autenticacao.interceptor';
 import { AutenticacaoService } from './autenticacao.service';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -47,12 +46,7 @@ export function tokenGetter(): string {
   providers: [
     AutenticacaoService,
     AuthGuard,
-    LogoutService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AutenticacaoInterceptor,
-      multi: true
-    }
+    LogoutService
   ]
 })
 export class SegurancaModule { }

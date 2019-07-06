@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +18,7 @@ import { ErrorHandlerService } from './error-handler.service';
 import pt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { SegurancaModule } from '../seguranca/seguranca.module';
+import { MoneyHttp } from '../seguranca/money-http';
 
 registerLocaleData(pt);
 
@@ -40,6 +42,8 @@ registerLocaleData(pt);
     ConfirmationService,
     MessageService,
     Title,
+    MoneyHttp,
+    JwtHelperService,
     { provide: LOCALE_ID, useValue: 'pt-BR'} // provider por valor
   ],
   exports: [

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { MoneyHttp } from './../seguranca/money-http';
 import { Injectable } from '@angular/core';
 
 import * as moment from 'moment';
@@ -10,14 +10,12 @@ export class DashboardService {
   private estatisticasUri = `${environment.urlApi}/lancamentos/estatisticas`;
 
   constructor(
-    private http: HttpClient
+    private http: MoneyHttp
   ) { }
 
   lancamentosPorCategoria(): Promise<any> {
     const uri = `${this.estatisticasUri}/categoria`;
-
-    return this.http.get(uri).toPromise()
-      .then(response => (response as JSON));
+    return this.http.get(uri).toPromise();
   }
 
   lancamentosPorDia(): Promise<any> {
@@ -25,7 +23,7 @@ export class DashboardService {
 
     return this.http.get(uri).toPromise()
       .then(response => {
-        const dados = (response as JSON);
+        const dados = response;
         this.converterStringParaDatas(dados);
 
         return dados;

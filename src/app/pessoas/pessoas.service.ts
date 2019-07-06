@@ -1,3 +1,4 @@
+import { MoneyHttp } from './../seguranca/money-http';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pessoa } from '../core/models/pessoa.model';
@@ -10,20 +11,19 @@ export class PessoasService {
   private pessoasUrl: string;
 
   constructor(
-    private http: HttpClient
+    private http: MoneyHttp
   ) {
     this.pessoasUrl = `${environment.urlApi}/pessoas`;
   }
 
   criar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.post(this.pessoasUrl, JSON.stringify(pessoa)).toPromise()
-      .then(response => (response as Pessoa));
+    return this.http.post<Pessoa>(this.pessoasUrl, JSON.stringify(pessoa)).toPromise();
   }
 
   listarTodas(): Promise<any> {
     return this.http.get(this.pessoasUrl).toPromise()
       .then(response => {
-        const responseJson = (response as JSON);
+        const responseJson = response;
 
         const resposta = {
           pessoas: responseJson['content'],
@@ -46,7 +46,7 @@ export class PessoasService {
 
     return this.http.get(this.pessoasUrl, { params }).toPromise()
       .then(response => {
-        const responseJson = (response as JSON);
+        const responseJson = response;
 
         const resposta = {
           pessoas: responseJson['content'],
@@ -69,13 +69,11 @@ export class PessoasService {
   }
 
   buscaPeloCodigo(codigo: number): Promise<Pessoa> {
-    return this.http.get(`${this.pessoasUrl}/${codigo}`).toPromise()
-      .then(response => (response as Pessoa));
+    return this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`).toPromise();
   }
 
   atualizar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.put(`${this.pessoasUrl}/${pessoa.codigo}`, JSON.stringify(pessoa)).toPromise()
-      .then(response => (response as Pessoa));
+    return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, JSON.stringify(pessoa)).toPromise();
   }
 }
 

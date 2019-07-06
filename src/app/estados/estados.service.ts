@@ -1,5 +1,5 @@
+import { MoneyHttp } from './../seguranca/money-http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Estado } from '../core/models/estado.model';
 
@@ -11,7 +11,7 @@ export class EstadosService {
   private estadosUri = `${environment.urlApi}/estados`;
 
   constructor(
-    private http: HttpClient
+    private http: MoneyHttp
   ) { }
 
   listarTodos(): Promise<any> {
@@ -20,7 +20,6 @@ export class EstadosService {
   }
 
   buscaPorCodigo(codigo: number): Promise<Estado> {
-    return this.http.get(`${this.estadosUri}/${codigo}`).toPromise()
-      .then(response => (response as Estado));
+    return this.http.get<Estado>(`${this.estadosUri}/${codigo}`).toPromise();
   }
 }

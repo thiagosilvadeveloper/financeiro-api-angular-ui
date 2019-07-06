@@ -1,3 +1,4 @@
+import { MoneyHttp } from './../seguranca/money-http';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -12,16 +13,13 @@ export class LancamentosService {
   private lancamentosUrl: string;
 
   constructor(
-    private http: HttpClient
+    private http: MoneyHttp
   ) {
-    console.log(environment.urlApi);
-
     this.lancamentosUrl = `${environment.urlApi}/lancamentos`;
   }
 
   criar(lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.post(`${this.lancamentosUrl}`, JSON.stringify(lancamento)).toPromise()
-      .then(response => (response as Lancamento));
+    return this.http.post<Lancamento>(`${this.lancamentosUrl}`, JSON.stringify(lancamento)).toPromise();
   }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
@@ -45,7 +43,7 @@ export class LancamentosService {
     return this.http.get(`${this.lancamentosUrl}?resumo`, { params } )
       .toPromise()
       .then(response => {
-        const responseJson = (response as JSON);
+        const responseJson = response;
 
         const resposta = {
           lancamentos: responseJson ? responseJson['content'] : null,
@@ -62,19 +60,19 @@ export class LancamentosService {
   }
 
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, JSON.stringify(lancamento)).toPromise()
+    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, JSON.stringify(lancamento)).toPromise()
       .then(response => {
-        const lancamento = (response as Lancamento);
-        this.converterStringParaDatas([lancamento]);
+        const lancamentoAtualizado = response;
+        this.converterStringParaDatas([lancamentoAtualizado]);
 
-        return lancamento;
+        return lancamentoAtualizado;
       });
   }
 
   buscaPeloCodigo(codigo: number): Promise<Lancamento> {
-    return this.http.get(`${this.lancamentosUrl}/${codigo}`).toPromise()
+    return this.http.get<Lancamento>(`${this.lancamentosUrl}/${codigo}`).toPromise()
       .then(response => {
-        const lancamento = (response as Lancamento);
+        const lancamento = response;
         this.converterStringParaDatas([lancamento]);
 
         return lancamento;

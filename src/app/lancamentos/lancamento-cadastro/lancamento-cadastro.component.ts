@@ -55,28 +55,6 @@ export class LancamentoCadastroComponent implements OnInit {
     this.carregarPessoas();
   }
 
-  configurarFormulario() {
-    this.formulario = this.formBuilder.group({
-      codigo: [],
-      tipo: [ 'RECEITA', Validators.required ],
-      dataVencimento: [ null, Validators.required ],
-      dataPagamento: [],
-      descricao: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(5) ]],
-      valor: [ null, Validators.required ],
-      pessoa: this.formBuilder.group({
-        codigo: [ null, Validators.required ],
-        nome: []
-      }),
-      categoria: this.formBuilder.group({
-        codigo: [ null, Validators.required ],
-        nome: []
-      }),
-      observacao: [],
-      anexo: [],
-      urlAnexo: []
-    });
-  }
-
   validarObrigatoriedade(input: FormControl) {
     return (input.value ? null : { obrigatoriedade: true });
   }
@@ -87,16 +65,16 @@ export class LancamentoCadastroComponent implements OnInit {
     };
   }
 
-  salvar(form: FormControl) {
+  salvar() {
     if (this.isEditando()) {
       this.atualizar();
     } else {
-      this.criar(form);
+      this.criar();
     }
   }
 
-  novo(form: FormControl) {
-    form.reset();
+  novo() {
+    this.configurarFormulario();
 
     this.router.navigate(['/lancamentos/novo']);
   }
@@ -140,6 +118,28 @@ export class LancamentoCadastroComponent implements OnInit {
     return `${this.isEditando() ? 'Editar' : 'Novo'} Lançamento`;
   }
 
+  private configurarFormulario() {
+    this.formulario = this.formBuilder.group({
+      codigo: [],
+      tipo: [ 'RECEITA', Validators.required ],
+      dataVencimento: [ null, Validators.required ],
+      dataPagamento: [],
+      descricao: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(5) ]],
+      valor: [ null, Validators.required ],
+      pessoa: this.formBuilder.group({
+        codigo: [ null, Validators.required ],
+        nome: []
+      }),
+      categoria: this.formBuilder.group({
+        codigo: [ null, Validators.required ],
+        nome: []
+      }),
+      observacao: [],
+      anexo: [],
+      urlAnexo: []
+    });
+  }
+
   private atualizarTitulo() {
     this.title.setTitle(`${this.isEditando() ? 'Edição de ' : 'Novo'} Lançamento`);
   }
@@ -149,7 +149,7 @@ export class LancamentoCadastroComponent implements OnInit {
       .then(() => this.router.navigate(['/lancamentos']) );
   }
 
-  private criar(form: FormControl) {
+  private criar() {
     this.lancamentoService.criar(this.formulario.value)
       .then(lancamento => {
         this.messageService.add({severity: 'success', summary: 'Confirmação', detail: 'Lançamento criado com sucesso.'});

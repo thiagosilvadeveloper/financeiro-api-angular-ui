@@ -1,3 +1,4 @@
+import { MoneyHttp } from './../seguranca/money-http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -10,13 +11,12 @@ export class CategoriasService {
   private categoriasUrl: string;
 
   constructor(
-    private http: HttpClient
+    private http: MoneyHttp
   ) {
     this.categoriasUrl = `${environment.urlApi}/categorias`;
   }
 
   listarTodas(): Promise<any> {
-    return this.http.get(this.categoriasUrl).toPromise()
-      .then(response => (response as JSON));
+    return this.http.get(this.categoriasUrl).toPromise();
   }
 }

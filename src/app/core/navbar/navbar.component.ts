@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 
+  exibindoMenu = false;
+
   constructor(
     public auth: AutenticacaoService,
     private errorService: ErrorHandlerService,
