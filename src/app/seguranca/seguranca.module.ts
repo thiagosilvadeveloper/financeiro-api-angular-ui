@@ -38,8 +38,8 @@ export function tokenGetter(): string {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: [`${environment.urlApi.replace('http://', '').replace('https://', '')}`],
-        blacklistedRoutes: [`${environment.urlApi}/oauth/token`],
+        whitelistedDomains: environment.tokenWhitelistedDomains,
+        blacklistedRoutes: environment.tokenBlacklistedRoutes,
         skipWhenExpired: true
       }
     })

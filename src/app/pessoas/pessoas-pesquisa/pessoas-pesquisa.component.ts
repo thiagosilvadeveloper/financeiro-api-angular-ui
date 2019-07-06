@@ -1,3 +1,4 @@
+import { AutenticacaoService } from 'src/app/seguranca/autenticacao.service';
 import { Title } from '@angular/platform-browser';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -20,6 +21,7 @@ export class PessoasPesquisaComponent implements OnInit {
   @ViewChild('tabela') tabela;
 
   constructor(
+    public auth: AutenticacaoService,
     private confirmationService: ConfirmationService,
     private errorHandlerService: ErrorHandlerService,
     private pessoaService: PessoasService,
