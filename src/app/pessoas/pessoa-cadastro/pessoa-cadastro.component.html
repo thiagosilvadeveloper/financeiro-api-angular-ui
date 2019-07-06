@@ -43,15 +43,13 @@
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
-        <label>Cidade</label>
-        <input type="text" pInputText name="cidade" [(ngModel)]="pessoa.endereco.cidade" #cidade="ngModel" required>
-        <app-mensagem-erro [control]="cidade" erro="required" mensagem="Este campo é obrigatório"></app-mensagem-erro>
+        <label>Estado</label>
+        <p-dropdown [options]="estados" name="estado" [(ngModel)]="estadoSelecionado" placeholder="Selecione" [filter]="true" (onChange)="carregarCidades()"></p-dropdown>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
-        <label>Estado</label>
-        <input type="text" pInputText name="estado" [(ngModel)]="pessoa.endereco.estado" #estado="ngModel" required>
-        <app-mensagem-erro [control]="estado" erro="required" mensagem="Este campo é obrigatório"></app-mensagem-erro>
+        <label>Cidade</label>
+        <p-dropdown [options]="cidades" name="cidade" [(ngModel)]="pessoa.endereco.cidade" placeholder="Selecione" [filter]="true"></p-dropdown>
       </div>
 
       <div class="ui-g-12">

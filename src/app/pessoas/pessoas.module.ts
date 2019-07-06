@@ -12,12 +12,15 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
-import { DialogModule } from 'primeng/dialog'
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { SharedModule } from '../shared/shared.module';
 import { PessoasService } from './pessoas.service';
 import { PessoasRoutingModule } from './pessoas-routing.module';
 import { PessoaCadastroContatosComponent } from './pessoa-cadastro-contatos/pessoa-cadastro-contatos.component';
+import { EstadosService } from '../estados/estados.service';
+import { CidadesService } from './../cidades/cidades.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { PessoaCadastroContatosComponent } from './pessoa-cadastro-contatos/pess
 
     ButtonModule,
     DialogModule,
+    DropdownModule,
     InputMaskModule,
     InputTextModule,
     InputTextareaModule,
@@ -44,6 +48,8 @@ import { PessoaCadastroContatosComponent } from './pessoa-cadastro-contatos/pess
     PessoasRoutingModule
   ],
   providers: [
+    CidadesService,
+    EstadosService,
     PessoasService
   ],
   exports: []

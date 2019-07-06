@@ -1,3 +1,4 @@
+import { Estado } from './estado.model';
 
 export class Endereco {
   logradouro: string;
@@ -6,7 +7,7 @@ export class Endereco {
   bairro: string;
   cep: string;
   cidade: string;
-  estado: string;
+  estado = new Estado();
 }
 
 export class Contato {
